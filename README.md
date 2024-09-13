@@ -1,1 +1,7 @@
 # CS5351
+
+2024/9/12
+
+create User Stories
+
+![image-20240913134946626](D:\codes\CS5351\imgs\image-20240913134946626.png)
