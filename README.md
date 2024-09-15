@@ -4,7 +4,7 @@
 
 create User Stories
 
-![](D:\codes\CS5351\imgs\image-20240913134946626.png)
+![image-20240913134946626](D:\codes\CS5351\imgs\image-20240913134946626.png)
 
 > 2024/9/15
 
