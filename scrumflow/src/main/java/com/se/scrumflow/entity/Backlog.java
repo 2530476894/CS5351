@@ -16,16 +16,6 @@ public class Backlog {
     private String description;
     private Date createdAt;
     private Date updatedAt;
-    private List<UserStoryInBacklog> userStories = new ArrayList<>();
-
-    @Data
-    public static class UserStoryInBacklog {
-        private ObjectId storyId;
-        private int rank;
-
-        public UserStoryInBacklog(ObjectId storyId, int rank) {
-            this.storyId = storyId;
-            this.rank = rank;
-        }
-    }
+    // 关联的用户故事列表
+    private List<UserStory> userStories = new ArrayList<>();
 }
