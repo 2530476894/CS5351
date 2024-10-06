@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public enum PriorityTypeEnum {
+public enum ItemPriorityEnum {
 
     LOW(0, "低"),
 

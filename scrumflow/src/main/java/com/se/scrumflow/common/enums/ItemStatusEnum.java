@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public enum StatusTypeEnum {
+public enum ItemStatusEnum {
 
     UNDO(0, "未开始"),
 
@@ -12,7 +12,9 @@ public enum StatusTypeEnum {
 
     DONE(2, "已完成"),
 
-    TODO(3, "暂缓");
+    TODO(3, "暂缓"),
+
+    TIME_OUT(4, "超时");
 
     @Getter
     private final int code;
