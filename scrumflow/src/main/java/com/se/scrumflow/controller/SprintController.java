@@ -1,28 +1,46 @@
 package com.se.scrumflow.controller;
 
 import com.se.scrumflow.common.convention.result.Result;
-import com.se.scrumflow.dto.req.SprintCreateReqDTO;
+import com.se.scrumflow.dao.entity.ItemDO;
+import com.se.scrumflow.dao.entity.SprintDO;
+import com.se.scrumflow.dto.ItemInsertReqDTO;
+import com.se.scrumflow.dto.req.*;
 import com.se.scrumflow.service.SprintService;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.bson.types.ObjectId;
+
 
 @RestController
-@RequestMapping("/sprint")
-@RequiredArgsConstructor
+@RequestMapping("/sprints")
 public class SprintController {
 
-    private final SprintService sprintService;
+    @Autowired
+    private SprintService sprintService;
 
-    @PostMapping("/create")
+    @PostMapping
     public Result<Void> create(@RequestBody SprintCreateReqDTO requestParam) {
-        return null;
+        return sprintService.create(requestParam);
     }
 
-
-    @PutMapping("/update")
-    public Result<Void> update() {
-        return null;
+    @DeleteMapping
+    public Result<Void> delete(@RequestBody SprintDeleteReqDTO requestParam) {
+        return sprintService.delete(requestParam);
     }
 
+    @PostMapping("/item")
+    public Result<SprintDO> insertItem(@RequestBody ItemInsertReqDTO requestParam) {
+        return sprintService.insertItem(requestParam);
+    }
+
+    @PutMapping("/item")
+    public Result<ItemDO> updateItem(@RequestBody ItemUpdateReqDTO requestParam) {
+        return sprintService.updateItem(requestParam);
+    }
+
+    @GetMapping("/{sprintId}")
+    public Result<SprintWithItemsDTO> getSprintWithItems(@PathVariable("sprintId") ObjectId sprintId) {
+        return sprintService.getSprintWithItems(sprintId);
+    }
 }
 
