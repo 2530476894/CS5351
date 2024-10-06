@@ -1,5 +1,6 @@
 package com.se.scrumflow.dao.entity;
 
+import com.se.scrumflow.common.database.BaseDO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,16 +11,15 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-
-import static com.se.scrumflow.common.constant.ItemConstants.MAX_SUB_ITEM;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Document(collection = "col_item")
-public class ItemDO {
+public class ItemDO extends BaseDO {
 
     @MongoId
     @Field("_id")
@@ -27,16 +27,33 @@ public class ItemDO {
 
     String parentId;
 
-    String name;
+    /**
+     * 所属迭代
+     */
+    String sprintId;
+
+    String title;
 
     /**
      * 区分事项类型
      */
     Integer type;
 
-    List<ItemDO> subItems = new ArrayList<>(MAX_SUB_ITEM);
+    Integer status;
 
     String description;
+
+    ObjectId createUser;
+
+    ObjectId assignee;
+
+    Integer priority;
+
+    Integer storyPoint;
+
+    String tag;
+
+    Date deadLine;
 
     List<LogDO> logs = new ArrayList<>();
 
