@@ -1,5 +1,6 @@
 package com.se.scrumflow.dao.entity;
 
+import com.se.scrumflow.common.database.BaseDO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,25 +20,29 @@ import static com.se.scrumflow.common.constant.ItemConstants.MAX_SUB_ITEM;
 @AllArgsConstructor
 @Builder
 @Document(collection = "col_item")
-public class ItemDO {
+public class ItemDO extends BaseDO {
 
     @MongoId
     @Field("_id")
-    ObjectId id;
+    private ObjectId id;
 
-    String parentId;
+    private String parentId;
 
-    String name;
+    private String name;
 
     /**
      * 区分事项类型
      */
-    Integer type;
+    private Integer type; // Consider using an enum for better type safety
 
-    List<ItemDO> subItems = new ArrayList<>(MAX_SUB_ITEM);
+    private List<ItemDO> subItems = new ArrayList<>();
 
-    String description;
+    private String description;
 
-    List<LogDO> logs = new ArrayList<>();
+    private List<LogDO> logs = new ArrayList<>();
 
+    // New fields for Burndown integration
+    private Integer storyPoints; // Story points for estimating effort
+    private Integer estimatedTime; // Estimated time to complete (in hours or minutes)
+    private String status; // Current status (e.g., "To Do", "In Progress", "Done")
 }
