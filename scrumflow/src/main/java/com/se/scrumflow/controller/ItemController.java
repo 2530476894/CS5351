@@ -3,7 +3,11 @@ package com.se.scrumflow.controller;
 import com.se.scrumflow.common.convention.result.Result;
 import com.se.scrumflow.common.convention.result.Results;
 import com.se.scrumflow.dto.req.ItemCreateReqDTO;
+import com.se.scrumflow.dto.req.ItemPageReqDTO;
+import com.se.scrumflow.dto.resp.ItemPageRespDTO;
+import com.se.scrumflow.dto.resp.ItemQueryRespDTO;
 import com.se.scrumflow.service.ItemService;
+import com.se.scrumflow.utils.Page;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +25,16 @@ public class ItemController {
     public Result<Void> createItem(@RequestBody ItemCreateReqDTO requestParam) {
         itemService.createItem(requestParam);
         return Results.success();
+    }
+
+    @GetMapping("/{id}")
+    public Result<ItemQueryRespDTO> queryItem(@PathVariable String id) {
+        return Results.success(itemService.queryItem(id));
+    }
+
+    @GetMapping("/page")
+    public Result<Page<ItemPageRespDTO>> pageItem(@RequestBody ItemPageReqDTO requestParam) {
+        return Results.success(itemService.pageItem(requestParam));
     }
 
 }
