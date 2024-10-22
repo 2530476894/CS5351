@@ -25,12 +25,12 @@ public class ItemDO extends BaseDO {
     @Field("_id")
     ObjectId id;
 
-    String parentId;
+    ObjectId parentId;
 
     /**
      * 所属迭代
      */
-    String sprintId;
+    ObjectId sprintId;
 
     String title;
 
