@@ -1,4 +1,6 @@
 package com.se.scrumflow.service.impl;
+import com.mongodb.client.result.DeleteResult;
+import com.mongodb.client.result.UpdateResult;
 import com.se.scrumflow.common.convention.errorcode.BaseErrorCode;
 import com.se.scrumflow.common.convention.result.Result;
 import com.se.scrumflow.common.convention.result.Results;
@@ -6,16 +8,16 @@ import com.se.scrumflow.dao.entity.ItemDO;
 import com.se.scrumflow.dao.entity.SprintDO;
 import com.se.scrumflow.dao.repository.ItemRepository;
 import com.se.scrumflow.dao.repository.SprintRepository;
-
-import com.se.scrumflow.dto.ItemInsertReqDTO;
 import com.se.scrumflow.dto.req.*;
 import com.se.scrumflow.service.SprintService;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,10 +26,8 @@ public class SprintServiceImpl implements SprintService {
 
     @Autowired
     private SprintRepository sprintRepository;
-
     @Autowired
-    private ItemRepository itemRepository;
-
+    private MongoTemplate mongoTemplate;
     @Override
     public Result<Void> create(SprintCreateReqDTO requestParam) {
         try {
@@ -46,116 +46,64 @@ public class SprintServiceImpl implements SprintService {
     }
 
     @Override
-    public Result<Void> delete(SprintDeleteReqDTO requestParam) {
-        try {
-            sprintRepository.deleteById(requestParam.getSprintId());
-            return Results.success();
-        } catch (Exception e) {
-            return Results.failure("删除Sprint失败", e.getMessage());
-        }
+    public Result<List<SprintDO>> getAllSprints() {
+            List<SprintDO> sprints = sprintRepository.findAll();
+            return Results.success(sprints);
     }
 
     @Override
-    public Result<SprintDO> insertItem(ItemInsertReqDTO requestParam) {
-        try {
-            SprintDO sprint = sprintRepository.findById(requestParam.getSprintId()).orElseThrow(() -> new RuntimeException("未找到指定的Sprint"));
-            if (sprint.getItems() == null) {
-                sprint.setItems(new ArrayList<>());
-            }
-            // 先保存Item为独立文档（如果还没有保存）
-            ItemDO item = requestParam.getItem();
-            if (item.getId() == null) {
-                item = itemRepository.save(item);
-            }
-            sprint.getItems().add(item.getId());
-            SprintDO savedSprint = sprintRepository.save(sprint);
-            return Results.success(savedSprint);
-        } catch (Exception e) {
-            return new Result<SprintDO>()
-                    .setCode("更新Item失败错误码，可自定义")
-                    .setMessage("更新Item失败: " + e.getMessage())
-                    .setData(null);
-        }
+    public Result<Void> delete(ObjectId sprintId) {
+        // 构造查询条件
+        Query query = Query.query(Criteria.where("_id").is(sprintId));
+        // 删除 Sprint
+        DeleteResult deleteResult = mongoTemplate.remove(query, SprintDO.class);
+        return Results.success(); // 删除成功，返回成功结果
     }
-
-
 
     @Override
-    public Result<ItemDO> updateItem(ItemUpdateReqDTO requestParam) {
-        try {
-            return itemRepository.findById(requestParam.getItemId())
-                    .map(item -> {
-                        // 根据具体需求更新Item的各个属性
-                        if (requestParam.getUpdatedItem().getName()!= null) {
-                            item.setName(requestParam.getUpdatedItem().getName());
-                        }
-                        if (requestParam.getUpdatedItem().getDescription()!= null) {
-                            item.setDescription(requestParam.getUpdatedItem().getDescription());
-                        }
-                        // 更新其他属性...
-                        // 更新 Sprint 中的 Item id
-//                        for (SprintDO sprint : sprintRepository.findAll()) {
-//                            if (sprint.getItems()!= null) {
-//                                List<ObjectId> newItems = new ArrayList<>();
-//                                for (ObjectId itemId : sprint.getItems()) {
-//                                    if (itemId.equals(requestParam.getItemId())) {
-//                                        newItems.add(item.getId());
-//                                    } else {
-//                                        newItems.add(itemId);
-//                                    }
-//                                }
-//                                sprint.setItems(newItems);
-//                                sprintRepository.save(sprint);
-//                            }
-//                        }
-                        return Results.success(itemRepository.save(item));
-                    })
-                    .orElse(new Result<ItemDO>()
-                            .setCode("未找到指定的Item错误码，可自定义")
-                            .setMessage("未找到指定的Item")
-                            .setData(null));
-        } catch (Exception e) {
-            return new Result<ItemDO>()
-                    .setCode("更新Item失败错误码，可自定义")
-                    .setMessage("更新Item失败: " + e.getMessage())
-                    .setData(null);
+    public Result<Void> update(ObjectId sprintId, SprintUpdateReqDTO requestParam) {
+        // 构造更新查询条件
+        Query query = Query.query(Criteria.where("_id").is(sprintId));
+        // 创建更新操作
+        Update update = new Update();
+        // 仅更新非空字段
+        if (requestParam.getSprintName() != null) {
+            update.set("sprintName", requestParam.getSprintName());
         }
-    }
+        if (requestParam.getStartDate() != null) {
+            update.set("startDate", requestParam.getStartDate());
+        }
+        if (requestParam.getEndDate() != null) {
+            update.set("endDate", requestParam.getEndDate());
+        }
+        if (requestParam.getStatus() != null) {
+            update.set("status", requestParam.getStatus());
+        }
+        if (requestParam.getTotalStoryPoints() >= 0) { // 假设允许更新为0
+            update.set("totalStoryPoints", requestParam.getTotalStoryPoints());
+        }
+        if (requestParam.getCompletedStoryPoints() >= 0) { // 假设允许更新为0
+            update.set("completedStoryPoints", requestParam.getCompletedStoryPoints());
+        }
 
+        // 使用 MongoTemplate 执行更新操作
+        UpdateResult result = mongoTemplate.updateFirst(query, update, SprintDO.class);
+        // 检查更新结果
+        if (result.getMatchedCount() == 0) {
+            return Results.failure();
+        }
+        return Results.success();
+    }
     @Override
     public Result<SprintWithItemsDTO> getSprintWithItems(ObjectId sprintId) {
-        try {
+            // 查找 Sprint
             Optional<SprintDO> sprintOptional = sprintRepository.findById(sprintId);
-            if (sprintOptional.isEmpty()) {
-                Result<SprintWithItemsDTO> result = new Result<>();
-                result.setCode(BaseErrorCode.SPRINT_NOT_FOUND.code());
-                result.setMessage(BaseErrorCode.SPRINT_NOT_FOUND.message());
-                return result;
-            }
             SprintDO sprint = sprintOptional.get();
-            List<ItemDO> itemList = new ArrayList<>();
-            if (sprint.getItems()!= null) {
-                for (ObjectId itemId : sprint.getItems()) {
-                    Optional<ItemDO> itemOptional = itemRepository.findById(itemId);
-                    if (itemOptional.isEmpty()) {
-                        Result<SprintWithItemsDTO> result = new Result<>();
-                        result.setCode(BaseErrorCode.ITEM_NOT_FOUND_IN_SPRINT.code());
-                        result.setMessage(BaseErrorCode.ITEM_NOT_FOUND_IN_SPRINT.message());
-                        return result;
-                    }
-                    itemList.add(itemOptional.get());
-                }
-            }
+            // 使用 MongoTemplate 查询与当前 sprintId 相关的 Items
+            Query query = new Query(Criteria.where("sprintId").is(sprintId));
+            List<ItemDO> itemList = mongoTemplate.find(query, ItemDO.class);
+            // 创建 SprintWithItemsDTO
             SprintWithItemsDTO dto = new SprintWithItemsDTO(sprint, itemList);
             return Results.success(dto);
-        } catch (Exception e) {
-            Result<SprintWithItemsDTO> result = new Result<>();
-            result.setCode(BaseErrorCode.GET_SPRINT_WITH_ITEMS_FAILED.code());
-            result.setMessage(BaseErrorCode.GET_SPRINT_WITH_ITEMS_FAILED.message());
-            return result;
-        }
     }
-
-
-
 }
