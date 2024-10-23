@@ -1,16 +1,15 @@
 package com.se.scrumflow.dto.req;
 
-import org.bson.types.ObjectId;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class SprintDeleteReqDTO {
-    private ObjectId sprintId;
-
-    public ObjectId getSprintId() {
-        return sprintId;
-    }
-
-    public void setSprintId(ObjectId sprintId) {
-        this.sprintId = sprintId;
-    }
+    private String sprintId; // Sprint 的 ID
 }
 
