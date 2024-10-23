@@ -27,5 +27,4 @@ public class SprintDO extends BaseDO {
     private String status;
     private int totalStoryPoints;
     private int completedStoryPoints;
-    private List<ObjectId> items;
 }

@@ -11,9 +11,8 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-
-import static com.se.scrumflow.common.constant.ItemConstants.MAX_SUB_ITEM;
 
 @Data
 @NoArgsConstructor
@@ -24,25 +23,38 @@ public class ItemDO extends BaseDO {
 
     @MongoId
     @Field("_id")
-    private ObjectId id;
+    ObjectId id;
 
-    private String parentId;
+    ObjectId parentId;
 
-    private String name;
+    /**
+     * 所属迭代
+     */
+    ObjectId sprintId;
+
+    String title;
 
     /**
      * 区分事项类型
      */
-    private Integer type; // Consider using an enum for better type safety
+    Integer type;
 
-    private List<ItemDO> subItems = new ArrayList<>();
+    Integer status;
 
-    private String description;
+    String description;
 
-    private List<LogDO> logs = new ArrayList<>();
+    ObjectId createUser;
 
-    // New fields for Burndown integration
-    private Integer storyPoints; // Story points for estimating effort
-    private Integer estimatedTime; // Estimated time to complete (in hours or minutes)
-    private String status; // Current status (e.g., "To Do", "In Progress", "Done")
+    ObjectId assignee;
+
+    Integer priority;
+
+    Integer storyPoint;
+
+    String tag;
+
+    Date deadLine;
+
+    List<LogDO> logs = new ArrayList<>();
+
 }
