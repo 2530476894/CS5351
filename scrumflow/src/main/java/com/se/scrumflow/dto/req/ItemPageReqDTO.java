@@ -5,25 +5,13 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class ItemCreateReqDTO {
+public class ItemPageReqDTO {
 
-    String parentId;
-
-    /**
-     * 所属迭代
-     */
     String sprintId;
 
-    String title;
-
-    /**
-     * 区分事项类型
-     */
     Integer type;
 
     Integer status;
-
-    String description;
 
     String createUser;
 
@@ -38,5 +26,9 @@ public class ItemCreateReqDTO {
     Date startTime;
 
     Date endTime;
+
+    int pageNumber;
+
+    int pageSize;
 
 }
