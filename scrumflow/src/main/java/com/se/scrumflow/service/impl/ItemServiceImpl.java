@@ -62,8 +62,11 @@ public class ItemServiceImpl implements ItemService {
         if (requestParam.getTag() != null) {
             query.addCriteria(Criteria.where("tag").is(requestParam.getTag()));
         }
-        if (requestParam.getDeadLine() != null) {
-            query.addCriteria(Criteria.where("deadLine").is(requestParam.getDeadLine()));
+        if (requestParam.getStartTime() != null) {
+            query.addCriteria(Criteria.where("startTime").is(requestParam.getStartTime()));
+        }
+        if (requestParam.getEndTime() != null) {
+            query.addCriteria(Criteria.where("endTime").is(requestParam.getEndTime()));
         }
         query.with(PageRequest.of(requestParam.getPageNumber(), requestParam.getPageSize()));
         List<ItemDO> itemDOList = mongoTemplate.find(query, ItemDO.class);

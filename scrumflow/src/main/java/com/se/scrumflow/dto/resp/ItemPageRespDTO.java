@@ -35,6 +35,8 @@ public class ItemPageRespDTO {
 
     String tag;
 
-    Date deadLine;
+    Date startTime;
+
+    Date endTime;
 
 }

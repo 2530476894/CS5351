@@ -35,6 +35,8 @@ public class ItemCreateReqDTO {
 
     String tag;
 
-    Date deadLine;
+    Date startTime;
+
+    Date endTime;
 
 }

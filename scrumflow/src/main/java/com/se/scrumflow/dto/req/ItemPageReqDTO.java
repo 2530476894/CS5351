@@ -23,7 +23,9 @@ public class ItemPageReqDTO {
 
     String tag;
 
-    Date deadLine;
+    Date startTime;
+
+    Date endTime;
 
     int pageNumber;
 

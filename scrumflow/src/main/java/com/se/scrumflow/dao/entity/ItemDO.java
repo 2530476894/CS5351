@@ -53,7 +53,9 @@ public class ItemDO extends BaseDO {
 
     String tag;
 
-    Date deadLine;
+    Date startTime;
+
+    Date endTime;
 
     List<LogDO> logs = new ArrayList<>();
 

@@ -37,6 +37,6 @@ public class ItemQueryRespDTO {
 
     String tag;
 
-    Date deadLine;
+    Date endTime;
 
 }
