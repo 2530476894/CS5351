@@ -8,6 +8,5 @@ import java.util.Date;
 import java.util.List;
 
 public interface BurndownRepository extends MongoRepository<BurndownDO, ObjectId> {
-    List<BurndownDO> findBySprintId(ObjectId sprintId);
-    List<BurndownDO> findBySprintIdAndDateBetween(ObjectId sprintId, Date startDate, Date endDate);
+    BurndownDO findBySprintId(ObjectId sprintId);
 }
