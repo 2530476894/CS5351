@@ -41,6 +41,8 @@ public class ItemDO extends BaseDO {
 
     Integer status;
 
+    Date doneTime;
+
     String description;
 
     ObjectId createUser;
