@@ -55,7 +55,7 @@ public class BurndownServiceImpl implements BurndownService {
                 newBurndownDO.setStartTime(startDate);
                 newBurndownDO.setEndTime(endDate);
                 newBurndownDO.setTotalStoryPoints(totalStoryPoints);
-                burndownRepository.save(newBurndownDO);
+                burndownRepository.insert(newBurndownDO);
                 return newBurndownDO;
             } else {
                 // 添加异常处理，抛出找不到对应SprintDO的异常
