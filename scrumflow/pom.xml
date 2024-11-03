@@ -70,8 +70,6 @@
 			<artifactId>hutool-core</artifactId>
 			<version>5.8.27</version>
 		</dependency>
-
-
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-api</artifactId>
@@ -82,7 +80,6 @@
 			<artifactId>junit-jupiter-engine</artifactId>
 			<scope>test</scope>
 		</dependency>
-
 		<!--		json转换工具-->
 		<dependency>
 			<groupId>com.alibaba</groupId>
@@ -95,16 +92,17 @@
 			<artifactId>httpclient</artifactId>
 			<version>4.2.1</version>
 		</dependency>
-<!--swagger-->
+		<!--swagger3-->
 		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger2</artifactId>
-			<version>2.9.2</version>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>2.1.0</version>
 		</dependency>
+
 		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger-ui</artifactId>
-			<version>2.9.2</version>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
+			<version>2.1.0</version>
 		</dependency>
 
 	</dependencies>
