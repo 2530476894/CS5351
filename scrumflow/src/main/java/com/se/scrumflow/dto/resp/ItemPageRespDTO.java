@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.bson.types.ObjectId;
 
 import java.util.Date;
 
@@ -13,11 +14,11 @@ import java.util.Date;
 @Builder
 public class ItemPageRespDTO {
 
-    String id;
+    ObjectId id;
 
-    String parentId;
+    ObjectId parentId;
 
-    String sprintId;
+    ObjectId sprintId;
 
     String title;
 

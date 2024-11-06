@@ -9,6 +9,7 @@ import com.se.scrumflow.dto.resp.ItemQueryRespDTO;
 import com.se.scrumflow.service.ItemService;
 import com.se.scrumflow.utils.Page;
 import lombok.RequiredArgsConstructor;
+import org.bson.types.ObjectId;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -28,7 +29,7 @@ public class ItemController {
     }
 
     @GetMapping("/{id}")
-    public Result<ItemQueryRespDTO> queryItem(@PathVariable String id) {
+    public Result<ItemQueryRespDTO> queryItem(@PathVariable ObjectId id) {
         return Results.success(itemService.queryItem(id));
     }
 

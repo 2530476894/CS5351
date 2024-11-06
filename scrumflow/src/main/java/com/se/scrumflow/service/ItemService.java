@@ -5,12 +5,13 @@ import com.se.scrumflow.dto.req.ItemPageReqDTO;
 import com.se.scrumflow.dto.resp.ItemPageRespDTO;
 import com.se.scrumflow.dto.resp.ItemQueryRespDTO;
 import com.se.scrumflow.utils.Page;
+import org.bson.types.ObjectId;
 
 public interface ItemService {
 
     void createItem(ItemCreateReqDTO requestParam);
 
-    ItemQueryRespDTO queryItem(String id);
+    ItemQueryRespDTO queryItem(ObjectId id);
 
     Page<ItemPageRespDTO> pageItem(ItemPageReqDTO requestParam);
 }

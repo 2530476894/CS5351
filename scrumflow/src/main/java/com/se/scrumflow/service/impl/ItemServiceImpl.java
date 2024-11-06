@@ -35,9 +35,8 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public ItemQueryRespDTO queryItem(String id) {
-        ObjectId itemId = new ObjectId(id);
-        Optional<ItemDO> optionalItemDO = itemRepository.findById(itemId);
+    public ItemQueryRespDTO queryItem(ObjectId id) {
+        Optional<ItemDO> optionalItemDO = itemRepository.findById(id);
         return optionalItemDO.map(itemDO -> BeanUtil.copyProperties(itemDO, ItemQueryRespDTO.class)).orElse(null);
     }
 

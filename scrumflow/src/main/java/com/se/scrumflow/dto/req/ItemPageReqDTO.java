@@ -1,13 +1,14 @@
 package com.se.scrumflow.dto.req;
 
 import lombok.Data;
+import org.bson.types.ObjectId;
 
 import java.util.Date;
 
 @Data
 public class ItemPageReqDTO {
 
-    String sprintId;
+    ObjectId sprintId;
 
     Integer type;
 
