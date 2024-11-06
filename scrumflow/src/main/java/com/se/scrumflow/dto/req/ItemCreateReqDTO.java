@@ -39,4 +39,6 @@ public class ItemCreateReqDTO {
 
     Date endTime;
 
+    Date doneTime;
+
 }
