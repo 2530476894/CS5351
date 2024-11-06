@@ -1,4 +1,4 @@
-package com.se.scrumflow.dto;
+package com.se.scrumflow.dto.req;
 
 import com.se.scrumflow.dao.entity.ItemDO;
 import org.bson.types.ObjectId;

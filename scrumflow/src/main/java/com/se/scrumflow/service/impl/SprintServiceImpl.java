@@ -1,16 +1,17 @@
 package com.se.scrumflow.service.impl;
+
+import cn.hutool.core.bean.BeanUtil;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
-import com.se.scrumflow.common.convention.errorcode.BaseErrorCode;
 import com.se.scrumflow.common.convention.result.Result;
 import com.se.scrumflow.common.convention.result.Results;
 import com.se.scrumflow.dao.entity.ItemDO;
 import com.se.scrumflow.dao.entity.SprintDO;
-import com.se.scrumflow.dao.repository.ItemRepository;
 import com.se.scrumflow.dao.repository.SprintRepository;
-import com.se.scrumflow.dto.req.*;
+import com.se.scrumflow.dto.req.SprintCreateReqDTO;
+import com.se.scrumflow.dto.req.SprintUpdateReqDTO;
+import com.se.scrumflow.dto.req.SprintWithItemsDTO;
 import com.se.scrumflow.service.SprintService;
-
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -18,6 +19,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -31,13 +33,7 @@ public class SprintServiceImpl implements SprintService {
     @Override
     public Result<Void> create(SprintCreateReqDTO requestParam) {
         try {
-            SprintDO sprint = new SprintDO();
-            sprint.setSprintName(requestParam.getSprintName());
-            sprint.setStartDate(requestParam.getStartDate());
-            sprint.setEndDate(requestParam.getEndDate());
-            sprint.setStatus(requestParam.getStatus());
-            sprint.setTotalStoryPoints(requestParam.getTotalStoryPoints());
-            sprint.setCompletedStoryPoints(requestParam.getCompletedStoryPoints());
+            SprintDO sprint = BeanUtil.copyProperties(requestParam, SprintDO.class);
             sprintRepository.save(sprint);
             return Results.success();
         } catch (Exception e) {
@@ -57,6 +53,9 @@ public class SprintServiceImpl implements SprintService {
         Query query = Query.query(Criteria.where("_id").is(sprintId));
         // 删除 Sprint
         DeleteResult deleteResult = mongoTemplate.remove(query, SprintDO.class);
+        if (deleteResult.wasAcknowledged() && deleteResult.getDeletedCount() == 0) {
+            return Results.failure();
+        }
         return Results.success(); // 删除成功，返回成功结果
     }
 
@@ -94,6 +93,7 @@ public class SprintServiceImpl implements SprintService {
         }
         return Results.success();
     }
+
     @Override
     public Result<SprintWithItemsDTO> getSprintWithItems(ObjectId sprintId) {
             // 查找 Sprint

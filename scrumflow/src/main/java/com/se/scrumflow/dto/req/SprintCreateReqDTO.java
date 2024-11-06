@@ -17,7 +17,5 @@ public class SprintCreateReqDTO {
     private Date startDate;
     private Date endDate;
     private String status;
-    private int totalStoryPoints;
-    private int completedStoryPoints;
 }
 
