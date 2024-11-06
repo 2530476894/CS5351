@@ -24,7 +24,7 @@ public class SprintDO extends BaseDO {
     private String sprintName;
     private Date startDate;
     private Date endDate;
-    private String status;
-    private int totalStoryPoints;
-    private int completedStoryPoints;
+    private Integer status;
+    private Integer totalStoryPoints;
+    private Integer completedStoryPoints;
 }

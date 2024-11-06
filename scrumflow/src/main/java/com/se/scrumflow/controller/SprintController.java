@@ -41,7 +41,7 @@ public class SprintController {
      *
      * @return 包含所有冲刺信息的Result对象，其中SprintDO列表为冲刺的实体数据
      */
-    @GetMapping
+    @GetMapping("/all")
     @Operation(summary = "Get all sprints")
     public Result<List<SprintDO>> getAllSprints() {
         return sprintService.getAllSprints();
@@ -51,15 +51,13 @@ public class SprintController {
     /**
      * 更新指定的冲刺（Sprint）
      *
-     * @param sprintId 冲刺的唯一标识符
      * @param requestParam 包含更新冲刺所需参数的DTO对象
      * @return 包含操作结果的Result对象，如果更新成功，则Result对象将表示成功状态；如果更新失败，则Result对象将包含错误信息
      */
-    @PutMapping("/{sprintId}")
+    @PutMapping("/update")
     @Operation(summary = "Update a sprint")
-    public Result<Void> updateSprint(@PathVariable("sprintId") ObjectId sprintId,
-                                     @RequestBody SprintUpdateReqDTO requestParam) {
-        return sprintService.update(sprintId, requestParam);
+    public Result<Void> updateSprint(@RequestBody SprintUpdateReqDTO requestParam) {
+        return sprintService.update(requestParam);
     }
 
     // 删除 Sprint

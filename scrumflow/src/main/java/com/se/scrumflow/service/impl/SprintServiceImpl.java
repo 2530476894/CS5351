@@ -60,9 +60,9 @@ public class SprintServiceImpl implements SprintService {
     }
 
     @Override
-    public Result<Void> update(ObjectId sprintId, SprintUpdateReqDTO requestParam) {
+    public Result<Void> update(SprintUpdateReqDTO requestParam) {
         // 构造更新查询条件
-        Query query = Query.query(Criteria.where("_id").is(sprintId));
+        Query query = Query.query(Criteria.where("_id").is(requestParam.getSprintId()));
         // 创建更新操作
         Update update = new Update();
         // 仅更新非空字段
@@ -78,11 +78,18 @@ public class SprintServiceImpl implements SprintService {
         if (requestParam.getStatus() != null) {
             update.set("status", requestParam.getStatus());
         }
-        if (requestParam.getTotalStoryPoints() >= 0) { // 假设允许更新为0
-            update.set("totalStoryPoints", requestParam.getTotalStoryPoints());
+        if (requestParam.getTotalStoryPoints() >= 0) {
+            Query queryItems = new Query(Criteria
+                    .where("sprintId").is(requestParam.getSprintId()));
+            int total = mongoTemplate.find(queryItems, ItemDO.class).stream().mapToInt(ItemDO::getStoryPoint).sum();
+            update.set("totalStoryPoints",total);
         }
         if (requestParam.getCompletedStoryPoints() >= 0) { // 假设允许更新为0
-            update.set("completedStoryPoints", requestParam.getCompletedStoryPoints());
+            Query queryItems = new Query(Criteria
+                    .where("sprintId").is(requestParam.getSprintId())
+                    .and("status").is(2));
+            int total = mongoTemplate.find(queryItems, ItemDO.class).stream().mapToInt(ItemDO::getStoryPoint).sum();
+            update.set("completedStoryPoints", total);
         }
 
         // 使用 MongoTemplate 执行更新操作
