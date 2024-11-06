@@ -39,4 +39,6 @@ public class ItemPageRespDTO {
 
     Date endTime;
 
+    Date doneTime;
+
 }

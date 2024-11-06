@@ -37,6 +37,10 @@ public class ItemQueryRespDTO {
 
     String tag;
 
+    Date doneTime;
+
+    Date startTime;
+
     Date endTime;
 
 }

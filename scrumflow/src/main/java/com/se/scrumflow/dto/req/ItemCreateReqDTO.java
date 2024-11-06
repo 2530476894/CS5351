@@ -1,7 +1,6 @@
 package com.se.scrumflow.dto.req;
 
 import lombok.Data;
-import org.bson.types.ObjectId;
 
 import java.util.Date;
 
@@ -13,7 +12,7 @@ public class ItemCreateReqDTO {
     /**
      * 所属迭代
      */
-    ObjectId sprintId;
+    String sprintId;
 
     String title;
 
@@ -39,5 +38,7 @@ public class ItemCreateReqDTO {
     Date startTime;
 
     Date endTime;
+
+    Date doneTime;
 
 }
