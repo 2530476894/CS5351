@@ -31,12 +31,12 @@ public class BurndownController {
         return Results.success(burndown);
     }
 
-    @GetMapping("/init/{sprintId}")
-    @Operation(summary = "初始化燃尽图，填入计划的剩余故事点")
-    public Result<BurndownDO> initBurndown(@PathVariable ObjectId sprintId) {
-        BurndownDO burndown = burndownService.initBurndown(sprintId);
-        return Results.success(burndown);
-    }
+//    @GetMapping("/init/{sprintId}")
+//    @Operation(summary = "初始化燃尽图，填入计划的剩余故事点")
+//    public Result<BurndownDO> initBurndown(@PathVariable ObjectId sprintId) {
+//        BurndownDO burndown = burndownService.initBurndown(sprintId);
+//        return Results.success(burndown);
+//    }
 
     @PutMapping("/update/{sprintId}")
     @Operation(summary = "更新燃尽图，填入实际的剩余故事点  当 Item 状态改变时触发")

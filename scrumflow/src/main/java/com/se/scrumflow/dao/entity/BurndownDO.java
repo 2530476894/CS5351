@@ -1,7 +1,5 @@
 package com.se.scrumflow.dao.entity;
 
-import com.se.scrumflow.dto.req.ActualRemainingStoryPointDTO;
-import com.se.scrumflow.dto.req.PlannedRemainingStoryPointDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Map;
 
 @Data
 @NoArgsConstructor
@@ -24,7 +22,6 @@ public class BurndownDO {
     private ObjectId sprintId;
     private Date startTime;
     private Date endTime;
-    private int totalStoryPoints;
-    private List<ActualRemainingStoryPointDTO> actualRemainingStoryPoints;
-    private List<PlannedRemainingStoryPointDTO> plannedRemainingStoryPoints;
+    private Map<Date,Integer> actualRemainingStoryPoints;
+    private Map<Date,Integer> plannedRemainingStoryPoints;
 }
