@@ -24,6 +24,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import static com.se.scrumflow.common.enums.ItemStatusEnum.UNDO;
+
 @Service
 @RequiredArgsConstructor
 public class ItemServiceImpl implements ItemService {
@@ -35,6 +37,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public void createItem(ItemCreateReqDTO requestParam) {
         ItemDO itemDO = BeanUtil.copyProperties(requestParam, ItemDO.class);
+        itemDO.setStatus(UNDO.getCode());
         itemRepository.insert(itemDO);
     }
 
