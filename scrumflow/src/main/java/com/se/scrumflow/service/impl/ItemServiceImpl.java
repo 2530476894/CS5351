@@ -68,6 +68,15 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    public void updateItemStatus(ObjectId id, Integer status) {
+        Query query = new Query(Criteria.where("id").is(id));
+        Update update = Update.update("status", status);
+        Time.setUpdateTime(update);
+        Time.setDoneTime(update, status);
+        mongoTemplate.updateFirst(query, update, ItemDO.class);
+    }
+
+    @Override
     public void logicDeleteItem(ObjectId id) {
         Query query = new Query(Criteria.where("id").is(id));
         Update update = Update.update("delFlag", 1);

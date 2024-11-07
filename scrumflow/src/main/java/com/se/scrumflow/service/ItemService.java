@@ -18,5 +18,8 @@ public interface ItemService {
 
     void updateItem(ItemUpdateReqDTO requestParam);
 
+    void updateItemStatus(ObjectId id, Integer status);
+
     void logicDeleteItem(ObjectId id);
+
 }

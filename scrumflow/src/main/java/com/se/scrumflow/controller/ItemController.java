@@ -45,6 +45,12 @@ public class ItemController {
         return Results.success();
     }
 
+    @PostMapping("/update/{status}")
+    public Result<Void> updateItemStatus(@RequestParam("id") ObjectId id, @PathVariable Integer status) {
+        itemService.updateItemStatus(id, status);
+        return Results.success();
+    }
+
     @PostMapping("/delete/{id}")
     public Result<Void> deleteItem(@PathVariable ObjectId id) {
         itemService.logicDeleteItem(id);
