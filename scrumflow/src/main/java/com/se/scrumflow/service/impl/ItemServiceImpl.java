@@ -5,9 +5,11 @@ import com.se.scrumflow.dao.entity.ItemDO;
 import com.se.scrumflow.dao.repository.ItemRepository;
 import com.se.scrumflow.dto.req.ItemCreateReqDTO;
 import com.se.scrumflow.dto.req.ItemPageReqDTO;
+import com.se.scrumflow.dto.req.ItemUpdateReqDTO;
 import com.se.scrumflow.dto.resp.ItemPageRespDTO;
 import com.se.scrumflow.dto.resp.ItemQueryRespDTO;
 import com.se.scrumflow.service.ItemService;
+import com.se.scrumflow.utils.GeneralOperations;
 import com.se.scrumflow.utils.Page;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
@@ -15,6 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -73,5 +76,12 @@ public class ItemServiceImpl implements ItemService {
                 itemDO -> BeanUtil.copyProperties(itemDO, ItemPageRespDTO.class)
         ).toList();
         return Page.create(itemPageRespDTOList, itemPageRespDTOList.size());
+    }
+
+    @Override
+    public void updateItem(ItemUpdateReqDTO requestParam) {
+        Query query = new Query(Criteria.where("id").is(requestParam.getId()));
+        Update update = GeneralOperations.buildQueryOrUpdate(requestParam, Update.class);
+        mongoTemplate.updateFirst(query, update, ItemDO.class);
     }
 }

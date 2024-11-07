@@ -4,6 +4,7 @@ import com.se.scrumflow.common.convention.result.Result;
 import com.se.scrumflow.common.convention.result.Results;
 import com.se.scrumflow.dto.req.ItemCreateReqDTO;
 import com.se.scrumflow.dto.req.ItemPageReqDTO;
+import com.se.scrumflow.dto.req.ItemUpdateReqDTO;
 import com.se.scrumflow.dto.resp.ItemPageRespDTO;
 import com.se.scrumflow.dto.resp.ItemQueryRespDTO;
 import com.se.scrumflow.service.ItemService;
@@ -37,5 +38,12 @@ public class ItemController {
     public Result<Page<ItemPageRespDTO>> pageItem(@RequestBody ItemPageReqDTO requestParam) {
         return Results.success(itemService.pageItem(requestParam));
     }
+
+    @PostMapping("/update")
+    public Result<Void> updateItem(@RequestBody ItemUpdateReqDTO requestParam) {
+        itemService.updateItem(requestParam);
+        return Results.success();
+    }
+
 
 }
