@@ -42,4 +42,10 @@ public class ItemPageRespDTO {
 
     Date doneTime;
 
+    Date createTime;
+
+    Date updateTime;
+
+    Integer delFlag;
+
 }

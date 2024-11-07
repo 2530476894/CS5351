@@ -44,4 +44,10 @@ public class ItemQueryRespDTO {
 
     Date endTime;
 
+    Date createTime;
+
+    Date updateTime;
+
+    Integer delFlag;
+
 }
