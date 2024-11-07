@@ -52,9 +52,10 @@ public class ItemServiceImpl implements ItemService {
         Query query = GeneralOperations.buildQueryOrUpdate(requestParam, Query.class);
         query.with(PageRequest.of(requestParam.getPageNumber(), requestParam.getPageSize()));
         List<ItemDO> itemDOList = mongoTemplate.find(query, ItemDO.class);
-        List<ItemPageRespDTO> itemPageRespDTOList = itemDOList.stream().map(
-                itemDO -> BeanUtil.copyProperties(itemDO, ItemPageRespDTO.class)
-        ).toList();
+        List<ItemPageRespDTO> itemPageRespDTOList = itemDOList.stream()
+                .filter(itemDO -> itemDO.getDelFlag() != 1)
+                .map(itemDO -> BeanUtil.copyProperties(itemDO, ItemPageRespDTO.class))
+                .toList();
         return Page.create(itemPageRespDTOList, itemPageRespDTOList.size());
     }
 
@@ -62,6 +63,14 @@ public class ItemServiceImpl implements ItemService {
     public void updateItem(ItemUpdateReqDTO requestParam) {
         Query query = new Query(Criteria.where("id").is(requestParam.getId()));
         Update update = GeneralOperations.buildQueryOrUpdate(requestParam, Update.class);
+        Time.setUpdateTime(update);
+        mongoTemplate.updateFirst(query, update, ItemDO.class);
+    }
+
+    @Override
+    public void logicDeleteItem(ObjectId id) {
+        Query query = new Query(Criteria.where("id").is(id));
+        Update update = Update.update("delFlag", 1);
         Time.setUpdateTime(update);
         mongoTemplate.updateFirst(query, update, ItemDO.class);
     }

@@ -45,5 +45,9 @@ public class ItemController {
         return Results.success();
     }
 
-
+    @PostMapping("/delete/{id}")
+    public Result<Void> deleteItem(@PathVariable ObjectId id) {
+        itemService.logicDeleteItem(id);
+        return Results.success();
+    }
 }

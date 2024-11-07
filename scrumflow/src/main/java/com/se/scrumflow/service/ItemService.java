@@ -17,4 +17,6 @@ public interface ItemService {
     Page<ItemPageRespDTO> pageItem(ItemPageReqDTO requestParam);
 
     void updateItem(ItemUpdateReqDTO requestParam);
+
+    void logicDeleteItem(ObjectId id);
 }
