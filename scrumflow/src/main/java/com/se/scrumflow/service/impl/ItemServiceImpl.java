@@ -45,31 +45,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public Page<ItemPageRespDTO> pageItem(ItemPageReqDTO requestParam) {
-        Query query = Query.query(Criteria.where("sprintId").is(requestParam.getSprintId()));
-        if (requestParam.getType() != null) {
-            query.addCriteria(Criteria.where("type").is(requestParam.getType()));
-        }
-        if (requestParam.getStatus() != null) {
-            query.addCriteria(Criteria.where("status").is(requestParam.getStatus()));
-        }
-        if (requestParam.getAssignee() != null) {
-            query.addCriteria(Criteria.where("assignee").is(requestParam.getAssignee()));
-        }
-        if (requestParam.getPriority() != null) {
-            query.addCriteria(Criteria.where("priority").is(requestParam.getPriority()));
-        }
-        if (requestParam.getStoryPoint() != null) {
-            query.addCriteria(Criteria.where("storyPoint").is(requestParam.getStoryPoint()));
-        }
-        if (requestParam.getTag() != null) {
-            query.addCriteria(Criteria.where("tag").is(requestParam.getTag()));
-        }
-        if (requestParam.getStartTime() != null) {
-            query.addCriteria(Criteria.where("startTime").is(requestParam.getStartTime()));
-        }
-        if (requestParam.getEndTime() != null) {
-            query.addCriteria(Criteria.where("endTime").is(requestParam.getEndTime()));
-        }
+        Query query = GeneralOperations.buildQueryOrUpdate(requestParam, Query.class);
         query.with(PageRequest.of(requestParam.getPageNumber(), requestParam.getPageSize()));
         List<ItemDO> itemDOList = mongoTemplate.find(query, ItemDO.class);
         List<ItemPageRespDTO> itemPageRespDTOList = itemDOList.stream().map(
