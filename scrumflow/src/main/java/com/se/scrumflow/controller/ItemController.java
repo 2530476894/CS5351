@@ -39,19 +39,19 @@ public class ItemController {
         return Results.success(itemService.pageItem(requestParam));
     }
 
-    @PostMapping("/update")
+    @PatchMapping("/update")
     public Result<Void> updateItem(@RequestBody ItemUpdateReqDTO requestParam) {
         itemService.updateItem(requestParam);
         return Results.success();
     }
 
-    @PostMapping("/update/{status}")
+    @PatchMapping("/update/{status}")
     public Result<Void> updateItemStatus(@RequestParam("id") ObjectId id, @PathVariable Integer status) {
         itemService.updateItemStatus(id, status);
         return Results.success();
     }
 
-    @PostMapping("/delete/{id}")
+    @PatchMapping("/delete/{id}")
     public Result<Void> deleteItem(@PathVariable ObjectId id) {
         itemService.logicDeleteItem(id);
         return Results.success();
