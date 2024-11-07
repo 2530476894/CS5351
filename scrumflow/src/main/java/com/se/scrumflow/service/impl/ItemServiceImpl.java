@@ -38,6 +38,7 @@ public class ItemServiceImpl implements ItemService {
     public void createItem(ItemCreateReqDTO requestParam) {
         ItemDO itemDO = BeanUtil.copyProperties(requestParam, ItemDO.class);
         itemDO.setStatus(UNDO.getCode());
+        itemDO.setDelFlag(0);
         itemRepository.insert(itemDO);
     }
 
