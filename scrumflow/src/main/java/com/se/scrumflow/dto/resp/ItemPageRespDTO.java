@@ -14,11 +14,11 @@ import java.util.Date;
 @Builder
 public class ItemPageRespDTO {
 
-    ObjectId id;
+    String id;
 
-    ObjectId parentId;
+    String parentId;
 
-    ObjectId sprintId;
+    String sprintId;
 
     String title;
 
