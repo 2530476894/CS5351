@@ -11,6 +11,7 @@ import com.se.scrumflow.dto.resp.ItemQueryRespDTO;
 import com.se.scrumflow.service.ItemService;
 import com.se.scrumflow.utils.GeneralOperations;
 import com.se.scrumflow.utils.Page;
+import com.se.scrumflow.utils.Time;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.PageRequest;
@@ -58,6 +59,7 @@ public class ItemServiceImpl implements ItemService {
     public void updateItem(ItemUpdateReqDTO requestParam) {
         Query query = new Query(Criteria.where("id").is(requestParam.getId()));
         Update update = GeneralOperations.buildQueryOrUpdate(requestParam, Update.class);
+        Time.setUpdateTime(update);
         mongoTemplate.updateFirst(query, update, ItemDO.class);
     }
 }
