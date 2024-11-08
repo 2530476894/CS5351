@@ -8,9 +8,11 @@ import com.se.scrumflow.dto.resp.TagDTO;
 import com.se.scrumflow.dto.resp.TagQueryRespDTO;
 import com.se.scrumflow.service.TagService;
 import lombok.RequiredArgsConstructor;
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -57,4 +59,12 @@ public class TagServiceImpl implements TagService {
                 .total(tagDTOS.size())
                 .build();
     }
+
+    @Override
+    public void logicDeleteTag(ObjectId id) {
+        Query query = new Query(Criteria.where("id").is(id));
+        Update update = Update.update("delFlag", 1);
+        mongoTemplate.updateFirst(query, update, TagDO.class);
+    }
+
 }
