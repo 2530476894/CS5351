@@ -9,4 +9,6 @@ public interface TagService {
 
     TagQueryRespDTO getAllTag();
 
+    TagQueryRespDTO searchTag(String keyword);
+
 }

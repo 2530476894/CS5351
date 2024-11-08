@@ -8,6 +8,9 @@ import com.se.scrumflow.dto.resp.TagDTO;
 import com.se.scrumflow.dto.resp.TagQueryRespDTO;
 import com.se.scrumflow.service.TagService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +20,8 @@ import java.util.List;
 public class TagServiceImpl implements TagService {
 
     private final TagRepository tagRepository;
+
+    private final MongoTemplate mongoTemplate;
 
     @Override
     public void createTag(TagCreateReqDTO requestParam) {
@@ -38,4 +43,18 @@ public class TagServiceImpl implements TagService {
                 .build();
     }
 
+    @Override
+    public TagQueryRespDTO searchTag(String keyword) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("name").regex(keyword, "i"));
+        List<TagDO> tagDOList = mongoTemplate.find(query, TagDO.class);
+        List<TagDTO> tagDTOS = tagDOList.stream()
+                .filter(tagDO -> tagDO.getDelFlag() != 1)
+                .map(tagDO -> BeanUtil.copyProperties(tagDO, TagDTO.class))
+                .toList();
+        return TagQueryRespDTO.builder()
+                .tags(tagDTOS)
+                .total(tagDTOS.size())
+                .build();
+    }
 }

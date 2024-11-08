@@ -26,4 +26,9 @@ public class TagController {
         return Results.success(tagService.getAllTag());
     }
 
+    @GetMapping("/search")
+    public Result<TagQueryRespDTO> searchTag(@RequestParam("keyword") String keyword) {
+        return Results.success(tagService.searchTag(keyword));
+    }
+
 }
