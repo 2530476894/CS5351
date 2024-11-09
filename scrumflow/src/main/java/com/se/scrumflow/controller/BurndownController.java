@@ -31,7 +31,7 @@ public class BurndownController {
         return Results.success(burndown);
     }
 
-    @PutMapping("/update/{sprintId}")
+    @PatchMapping("/update/{sprintId}")
     @Operation(summary = "更新燃尽图，填入实际的剩余故事点,当 Item 状态改变时触发")
     public Result<BurndownDO> updateBurndown(@PathVariable ObjectId sprintId) {
         BurndownDO burndown = burndownService.updateBurndown(sprintId);
