@@ -18,7 +18,7 @@ import cn.dev33.satoken.stp.StpUtil;
 @RequestMapping("/auth/login")
 public class LoginAuthController {
     
-    @PatchMapping("doLogin")
+    @PatchMapping("/doLogin")
     public Result<Void> doLogin(@RequestParam(value="name") String userName, @RequestParam(value="pwd") String userPwd) {
         //TODO: Get user auth info from db
 
@@ -42,17 +42,17 @@ public class LoginAuthController {
         return Results.failure("123", "Login Failed. Check your name and password");
     }
 
-    @PatchMapping("isLogin")
+    @PatchMapping("/isLogin")
     public Result<String> isLogin() {
         return Results.success("Logged in: " + StpUtil.isLogin());
     }
 
-    @PatchMapping("tokenInfo")
+    @PatchMapping("/tokenInfo")
     public Result<String> tokenInfo() {
         return Results.success(StpUtil.getTokenInfo().toString());
     }
     
-    @PatchMapping("logout")
+    @PatchMapping("/logout")
     public Result<Void> logout() {
         StpUtil.logout();
         return Results.success();
