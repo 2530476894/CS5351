@@ -1,25 +1,40 @@
 package com.se.scrumflow.dto.req;
 
-import com.se.scrumflow.dao.entity.ItemDO;
+import lombok.Data;
 import org.bson.types.ObjectId;
 
+import java.util.Date;
+
+/**
+ * 更新item信息，不涉及更新状态
+ */
+@Data
 public class ItemUpdateReqDTO {
-    private ObjectId itemId;
-    private ItemDO updatedItem;
 
-    public ObjectId getItemId() {
-        return itemId;
-    }
+    ObjectId id;
 
-    public void setItemId(ObjectId itemId) {
-        this.itemId = itemId;
-    }
+    ObjectId parentId;
 
-    public ItemDO getUpdatedItem() {
-        return updatedItem;
-    }
+    ObjectId sprintId;
 
-    public void setUpdatedItem(ItemDO updatedItem) {
-        this.updatedItem = updatedItem;
-    }
+    String title;
+
+    Integer type;
+
+    String description;
+
+    ObjectId createUser;
+
+    ObjectId assignee;
+
+    Integer priority;
+
+    Integer storyPoint;
+
+    String tag;
+
+    Date startTime;
+
+    Date endTime;
+
 }

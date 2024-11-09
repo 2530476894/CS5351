@@ -8,7 +8,7 @@ import java.util.Date;
 @Data
 public class ItemCreateReqDTO {
 
-    String parentId;
+    ObjectId parentId;
 
     /**
      * 所属迭代
