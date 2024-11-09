@@ -35,14 +35,12 @@ public class UserController {
         String storedPassword = "";
         String userID = "";
 
-        try {
-            UserDO userInfo = userService.queryUserByUserName(userName);
-            storedPassword = userInfo.getPassword();
-            userID = userInfo.getUserID();
-        } catch (Exception e) {
-            // TODO
-            return Results.failure("123", "Login Failed. Check if signed up.");
+        UserDO userInfo = userService.queryUserByUserName(userName);
+        if (userInfo == null) {
+            return Results.failure("123", "Login Failed. Check if signed up or your user name.");
         }
+        storedPassword = userInfo.getPassword();
+        userID = userInfo.getUserID();
         
         if (userPwd.equals(storedPassword)) {
             StpUtil.login(userID);
