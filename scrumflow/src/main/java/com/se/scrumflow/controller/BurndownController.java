@@ -25,14 +25,14 @@ public class BurndownController {
      *
      */
     @PostMapping("/{sprintId}")
-    @Operation(summary = "根据冲刺ID创建一个空的燃尽图 获取x轴（时间）y轴（故事点数）的数据 当sprint状态改变为进行中的时候触发")
+    @Operation(summary = "根据冲刺ID初始化计划燃尽图 获取计划中的剩余故事点的数据,sprint初始化时创建")
     public Result<BurndownDO> createBurndown(@PathVariable ObjectId sprintId) {
         BurndownDO burndown = burndownService.createBurndown(sprintId);
         return Results.success(burndown);
     }
 
     @PutMapping("/update/{sprintId}")
-    @Operation(summary = "更新燃尽图，填入实际的剩余故事点  当 Item 状态改变时触发")
+    @Operation(summary = "更新燃尽图，填入实际的剩余故事点,当 Item 状态改变时触发")
     public Result<BurndownDO> updateBurndown(@PathVariable ObjectId sprintId) {
         BurndownDO burndown = burndownService.updateBurndown(sprintId);
         return Results.success(burndown);
