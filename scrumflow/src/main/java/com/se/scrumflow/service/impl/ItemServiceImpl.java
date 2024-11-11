@@ -45,16 +45,19 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public ItemQueryRespDTO queryItem(ObjectId id) {
         Optional<ItemDO> optionalItemDO = itemRepository.findById(id);
-        return optionalItemDO.map(itemDO -> BeanUtil.copyProperties(itemDO, ItemQueryRespDTO.class)).orElse(null);
+        return optionalItemDO
+                .filter(itemDO -> itemDO.getDelFlag() != 1)
+                .map(itemDO -> BeanUtil.copyProperties(itemDO, ItemQueryRespDTO.class))
+                .orElse(null);
     }
 
     @Override
     public Page<ItemPageRespDTO> pageItem(ItemPageReqDTO requestParam) {
         Query query = GeneralOperations.buildQueryOrUpdate(requestParam, Query.class);
+        query.addCriteria(Criteria.where("delFlag").ne(1));
         query.with(PageRequest.of(requestParam.getPageNumber(), requestParam.getPageSize()));
         List<ItemDO> itemDOList = mongoTemplate.find(query, ItemDO.class);
         List<ItemPageRespDTO> itemPageRespDTOList = itemDOList.stream()
-                .filter(itemDO -> itemDO.getDelFlag() != 1)
                 .map(itemDO -> BeanUtil.copyProperties(itemDO, ItemPageRespDTO.class))
                 .toList();
         return Page.create(itemPageRespDTOList, itemPageRespDTOList.size());

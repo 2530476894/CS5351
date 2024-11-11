@@ -12,10 +12,10 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class SprintCreateReqDTO {
-    private String id;
+//    private String id;
     private String sprintName;
     private Date startDate;
     private Date endDate;
-    private String status;
+    private Integer status;
 }
 

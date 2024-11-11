@@ -46,7 +46,7 @@ public class BurndownServiceImpl implements BurndownService {
             dateList.add(calendar.getTime());
             calendar.add(Calendar.DAY_OF_MONTH, 1);
         }
-        Map<Date, Integer> map = new HashMap<>();
+        Map<Date, Integer> map = new TreeMap<>();
         Query queryItems = new Query(Criteria
                 .where("sprintId").is(sprintId)
                 .and("endTime").gte(startDate));
@@ -90,7 +90,7 @@ public class BurndownServiceImpl implements BurndownService {
             calendar.add(Calendar.DAY_OF_MONTH, 1);
         }
 
-        Map<Date, Integer> map = new HashMap<>();
+        Map<Date, Integer> map = new TreeMap<>();
 
         Query queryItems = new Query(Criteria
                 .where("sprintId").is(sprintId)
