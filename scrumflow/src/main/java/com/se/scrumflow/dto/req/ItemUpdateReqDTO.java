@@ -5,30 +5,27 @@ import org.bson.types.ObjectId;
 
 import java.util.Date;
 
+/**
+ * 更新item信息，不涉及更新状态
+ */
 @Data
-public class ItemCreateReqDTO {
+public class ItemUpdateReqDTO {
+
+    ObjectId id;
 
     ObjectId parentId;
 
-    /**
-     * 所属迭代
-     */
     ObjectId sprintId;
 
     String title;
 
-    /**
-     * 区分事项类型
-     */
     Integer type;
-
-    Integer status;
 
     String description;
 
-    String createUser;
+    ObjectId createUser;
 
-    String assignee;
+    ObjectId assignee;
 
     Integer priority;
 
@@ -39,7 +36,5 @@ public class ItemCreateReqDTO {
     Date startTime;
 
     Date endTime;
-
-    Date doneTime;
 
 }

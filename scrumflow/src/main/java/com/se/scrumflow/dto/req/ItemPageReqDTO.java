@@ -6,25 +6,13 @@ import org.bson.types.ObjectId;
 import java.util.Date;
 
 @Data
-public class ItemCreateReqDTO {
+public class ItemPageReqDTO {
 
-    ObjectId parentId;
-
-    /**
-     * 所属迭代
-     */
     ObjectId sprintId;
 
-    String title;
-
-    /**
-     * 区分事项类型
-     */
     Integer type;
 
     Integer status;
-
-    String description;
 
     String createUser;
 
@@ -40,6 +28,8 @@ public class ItemCreateReqDTO {
 
     Date endTime;
 
-    Date doneTime;
+    int pageNumber;
+
+    int pageSize;
 
 }

@@ -5,17 +5,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class SprintCreateReqDTO {
-    private String id;
-    private String sprintName;
-    private Date startDate;
-    private Date endDate;
-    private String status;
+public class SprintDeleteReqDTO {
+    private String sprintId; // Sprint 的 ID
 }
 
