@@ -10,17 +10,14 @@ import com.se.scrumflow.service.UserService;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import cn.dev33.satoken.stp.StpUtil;
 import lombok.RequiredArgsConstructor;
-
-/*
- * 一些问题与代办：
- * 1. exception处理
- */
 
 @RestController
 @RequestMapping("/user")
@@ -29,7 +26,7 @@ public class UserController {
 
     private final UserService userService;
     
-    @PatchMapping("/doLogin")
+    @PostMapping("/doLogin")
     public Result<Void> doLogin(@RequestParam(value="name") String userName, @RequestParam(value="pwd") String userPwd) {
 
         String storedPassword = "";
@@ -49,7 +46,7 @@ public class UserController {
         return Results.failure("123", "Login Failed. Check your name and password");
     }
 
-    @PatchMapping("/isLogin")
+    @GetMapping("/isLogin")
     public Result<Void> isLogin() {
         if (StpUtil.isLogin()) {
             return Results.success();
@@ -57,29 +54,27 @@ public class UserController {
         return Results.failure("123", "Not logged in");
     }
 
-    @PatchMapping("/checkLogin")
+    @GetMapping("/checkLogin")
     public Result<Void> checkLogin() {
-
         // possible throw: cn.dev33.satoken.exception.NotLoginException
         StpUtil.checkLogin();
-
         return Results.success();
     }
 
-    @PatchMapping("/getLogin")
+    @GetMapping("/getLogin")
     public Result<UserQueryRespDTO> getLogin() {
         // possible throw: cn.dev33.satoken.exception.NotLoginException
         String userID = StpUtil.getLoginIdAsString();
         return Results.success(userService.queryUserByID(userID).toRespDTO());
     }
     
-    @PatchMapping("/logout")
+    @PostMapping("/logout")
     public Result<Void> logout() {
         StpUtil.logout();
         return Results.success();
     }
 
-    @PatchMapping("/signup")
+    @PostMapping("/signup")
     public Result<Void> signup(@RequestBody UserCreateReqDTO requestParam) {
         userService.createUser(requestParam);
         return Results.success();
