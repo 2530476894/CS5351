@@ -65,7 +65,7 @@ public class ItemController {
         return Results.success();
     }
 
-    @PatchMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     @Operation(summary = "逻辑删除单个事项", description = "逻辑删除单个事项")
     public Result<Void> deleteItem(@PathVariable ObjectId id) {
         StpUtil.checkPermission("item.delete");  
