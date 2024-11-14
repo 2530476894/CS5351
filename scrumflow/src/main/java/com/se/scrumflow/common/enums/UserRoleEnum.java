@@ -3,6 +3,8 @@ package com.se.scrumflow.common.enums;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import com.se.scrumflow.common.convention.exception.ClientException;
+
 import java.util.ArrayList;
 
 @RequiredArgsConstructor
@@ -42,7 +44,7 @@ public enum UserRoleEnum {
                 return role;
             }
         }
-        return null; // TODO or throw an exception
+        throw new ClientException("Invalid user role name provided.");
     }
 
 }
