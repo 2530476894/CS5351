@@ -28,7 +28,16 @@ public enum BaseErrorCode implements IErrorCode {
     SERVICE_TIMEOUT_ERROR("B000100", "系统执行超时"),
 
     // ========== 一级宏观错误码 调用第三方服务出错 ==========
-    REMOTE_ERROR("C000001", "调用第三方服务出错");
+    REMOTE_ERROR("C000001", "调用第三方服务出错"),
+
+
+    // ========== 二级宏观错误码 Sprint相关错误 ==========
+    SPRINT_NOT_FOUND("B000200", "未找到指定的Sprint"),
+    ITEM_NOT_FOUND_IN_SPRINT("B000201", "在Sprint中未找到指定的Item"),
+    GET_SPRINT_WITH_ITEMS_FAILED("B000202", "获取Sprint及Item信息失败");
+
+
+
 
     private final String code;
 

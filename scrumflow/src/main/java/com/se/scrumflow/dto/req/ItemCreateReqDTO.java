@@ -1,22 +1,45 @@
 package com.se.scrumflow.dto.req;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.bson.types.ObjectId;
+
+import java.util.Date;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class ItemCreateReqDTO {
 
-    String parentId;
+    ObjectId parentId;
 
-    String name;
+    /**
+     * 所属迭代
+     */
+    ObjectId sprintId;
 
+    String title;
+
+    /**
+     * 区分事项类型
+     */
     Integer type;
 
+    Integer status;
+
     String description;
+
+    ObjectId createUser;
+
+    ObjectId assignee;
+
+    Integer priority;
+
+    Integer storyPoint;
+
+    String tag;
+
+    Date startTime;
+
+    Date endTime;
+
+    Date doneTime;
 
 }
