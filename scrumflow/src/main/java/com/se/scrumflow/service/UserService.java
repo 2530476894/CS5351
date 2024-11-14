@@ -11,4 +11,13 @@ public interface UserService {
 
     void createUser(UserCreateReqDTO requestParam);
 
+    void doLogin(String userName, String userPwd);
+
+    void isLogin();
+
+    void checkLogin();
+
+    String getLogin();
+
+    void logout();
 }
