@@ -12,6 +12,7 @@ import com.se.scrumflow.service.UserService;
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.lang.UUID;
 import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
@@ -51,6 +52,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createUser(UserCreateReqDTO requestParam) {
+        requestParam.setUserID(UUID.randomUUID().toString());
         UserDO userDo = BeanUtil.copyProperties(requestParam, UserDO.class);
         userRepository.insert(userDo);
     }

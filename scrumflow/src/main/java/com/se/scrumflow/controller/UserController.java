@@ -4,6 +4,7 @@ import com.se.scrumflow.common.convention.result.Result;
 import com.se.scrumflow.common.convention.result.Results;
 import com.se.scrumflow.dao.entity.UserDO;
 import com.se.scrumflow.dto.req.UserCreateReqDTO;
+import com.se.scrumflow.dto.req.UserLoginReqDTO;
 import com.se.scrumflow.dto.resp.UserQueryRespDTO;
 import com.se.scrumflow.service.UserService;
 
@@ -29,8 +30,8 @@ public class UserController {
     private final UserService userService;
     
     @PostMapping("/doLogin")
-    public Result<Void> doLogin(@RequestParam(value="name") String userName, @RequestParam(value="pwd") String userPwd) {
-        userService.doLogin(userName, userPwd);
+    public Result<Void> doLogin(@RequestBody(required=true) UserLoginReqDTO user) {
+        userService.doLogin(user.getUsername(), user.getPassword());
         return Results.success();
     }
 
