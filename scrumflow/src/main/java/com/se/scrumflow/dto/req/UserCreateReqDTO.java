@@ -5,7 +5,7 @@ import org.bson.types.ObjectId;
 
 @Data
 public class UserCreateReqDTO {
-    
+
     String userID;
 
     String username;

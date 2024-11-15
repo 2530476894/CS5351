@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
 
         List<UserDO> optionalUserDO = userRepository.findByusername(userName);
         if (optionalUserDO.isEmpty()) {
-            throw new ClientException("Login Failed. Check if signed up or your user name.");
+            throw new ClientException("Login Failed. Check if signed up or your user name.1");
         }
         UserDO userInfo = optionalUserDO.get(0);
 
@@ -73,8 +73,9 @@ public class UserServiceImpl implements UserService {
         
         if (userPwd.equals(storedPassword)) {
             StpUtil.login(userID);
+        } else {
+            throw new ClientException("Login Failed. Check if signed up or your user name.2");
         }
-        throw new ClientException("Login Failed. Check if signed up or your user name.");
     }
 
     @Override
