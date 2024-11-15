@@ -31,8 +31,4 @@ public class UserDO extends BaseDO {
     String password;
 
     String roleName;
-
-    public UserQueryRespDTO toRespDTO() {
-        return new UserQueryRespDTO(userID, username, roleName);
-    }
 }

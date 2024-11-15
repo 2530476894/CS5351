@@ -2,9 +2,12 @@ package com.se.scrumflow.controller;
 
 import com.se.scrumflow.common.convention.result.Result;
 import com.se.scrumflow.common.convention.result.Results;
+import com.se.scrumflow.dao.entity.UserDO;
 import com.se.scrumflow.dto.req.UserCreateReqDTO;
 import com.se.scrumflow.dto.resp.UserQueryRespDTO;
 import com.se.scrumflow.service.UserService;
+
+import cn.hutool.core.bean.BeanUtil;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,7 +49,7 @@ public class UserController {
     @GetMapping("/getLogin")
     public Result<UserQueryRespDTO> getLogin() {
         String userID = userService.getLogin();
-        return Results.success(userService.queryUserByID(userID).toRespDTO());
+        return Results.success(BeanUtil.copyProperties(userService.queryUserByID(userID), UserQueryRespDTO.class));
     }
     
     @PostMapping("/logout")
