@@ -14,6 +14,7 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.bean.BeanUtil;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -31,20 +32,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDO queryUserByID(String userID) {
-        Optional<UserDO> optionalUserDO = userRepository.findByUserID(userID);
-        if (!optionalUserDO.isPresent()) {
+        List<UserDO> optionalUserDO = userRepository.findByID(userID);
+        if (optionalUserDO.isEmpty()) {
             return null;
         }
-        return optionalUserDO.get();
+        return optionalUserDO.get(0);
     }
 
     @Override
     public UserDO queryUserByUserName(String userName) {
-        Optional<UserDO> optionalUserDO = userRepository.findByUserName(userName);
-        if (!optionalUserDO.isPresent()) {
+        List<UserDO> optionalUserDO = userRepository.findByName(userName);
+        if (optionalUserDO.isEmpty()) {
             return null;
         }
-        return optionalUserDO.get();
+        return optionalUserDO.get(0);
     }
 
     @Override
@@ -58,11 +59,11 @@ public class UserServiceImpl implements UserService {
         String storedPassword = "";
         String userID = "";
 
-        Optional<UserDO> optionalUserDO = userRepository.findByUserName(userName);
-        if (!optionalUserDO.isPresent()) {
+        List<UserDO> optionalUserDO = userRepository.findByName(userName);
+        if (optionalUserDO.isEmpty()) {
             throw new ClientException("Login Failed. Check if signed up or your user name.");
         }
-        UserDO userInfo = optionalUserDO.get();
+        UserDO userInfo = optionalUserDO.get(0);
 
         storedPassword = userInfo.getPassword();
         userID = userInfo.getUserID();
