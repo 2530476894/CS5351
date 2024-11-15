@@ -8,6 +8,9 @@ import com.se.scrumflow.service.UserService;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -56,5 +59,11 @@ public class UserController {
     public Result<Void> signup(@RequestBody UserCreateReqDTO requestParam) {
         userService.createUser(requestParam);
         return Results.success();
+    }
+
+    @GetMapping("/getAllUsers")
+    public Result<List<UserQueryRespDTO>> getAllUsers() {
+        List<UserQueryRespDTO> allUsers = userService.getAllUsers();
+        return Results.success(allUsers); 
     }
 }

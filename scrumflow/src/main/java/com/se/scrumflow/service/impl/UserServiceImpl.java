@@ -14,6 +14,7 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.bean.BeanUtil;
 import lombok.RequiredArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -103,5 +104,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public void logout() {
         StpUtil.logout();
+    }
+
+    @Override
+    public List<UserQueryRespDTO> getAllUsers() {
+        List<UserQueryRespDTO> userDTOs = new ArrayList<>();
+        List<UserDO> userDOs = userRepository.findAll();
+        for (UserDO userDO : userDOs) {
+            userDTOs.add(BeanUtil.copyProperties(userDO, UserQueryRespDTO.class));
+        }
+        return userDTOs;
     }
 }

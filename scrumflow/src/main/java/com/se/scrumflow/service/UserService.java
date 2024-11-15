@@ -1,7 +1,10 @@
 package com.se.scrumflow.service;
 
+import java.util.List;
+
 import com.se.scrumflow.dao.entity.UserDO;
 import com.se.scrumflow.dto.req.UserCreateReqDTO;
+import com.se.scrumflow.dto.resp.UserQueryRespDTO;
 
 public interface UserService {
 
@@ -20,4 +23,6 @@ public interface UserService {
     String getLogin();
 
     void logout();
+
+    List<UserQueryRespDTO> getAllUsers();
 }
