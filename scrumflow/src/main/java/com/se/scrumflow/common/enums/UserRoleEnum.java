@@ -16,6 +16,8 @@ public enum UserRoleEnum {
         add("item.page");
         add("item.update");
         add("item.delete");
+        add("log.create");
+        add("log.page");
         add("sprint.create");
         add("sprint.update");
     }}),
@@ -24,12 +26,15 @@ public enum UserRoleEnum {
         add("item.query");
         add("item.page");
         add("item.update");
+        add("log.create");
+        add("log.page");
         add("sprint.update");
     }}),
 
     PROJECT_OWNER("project_owner", new ArrayList<String>() {{
         add("item.query");
         add("item.page");
+        add("log.page");
     }});
 
     @Getter
