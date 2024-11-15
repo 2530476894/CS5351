@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDO queryUserByID(String userID) {
-        List<UserDO> optionalUserDO = userRepository.findByID(userID);
+        List<UserDO> optionalUserDO = userRepository.findByuserID(userID);
         if (optionalUserDO.isEmpty()) {
             return null;
         }
@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDO queryUserByUserName(String userName) {
-        List<UserDO> optionalUserDO = userRepository.findByName(userName);
+        List<UserDO> optionalUserDO = userRepository.findByusername(userName);
         if (optionalUserDO.isEmpty()) {
             return null;
         }
@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
         String storedPassword = "";
         String userID = "";
 
-        List<UserDO> optionalUserDO = userRepository.findByName(userName);
+        List<UserDO> optionalUserDO = userRepository.findByusername(userName);
         if (optionalUserDO.isEmpty()) {
             throw new ClientException("Login Failed. Check if signed up or your user name.");
         }

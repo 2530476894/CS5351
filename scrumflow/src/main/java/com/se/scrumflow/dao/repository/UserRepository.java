@@ -15,11 +15,11 @@ public interface UserRepository extends MongoRepository<UserDO, ObjectId> {
     // @Query(value="{ 'user_id': ?0 }")
     // Optional<UserDO> findByUserID(String userID);
 
-    List<UserDO> findByID(String userID);
+    List<UserDO> findByuserID(String userID);
 
     // @Query(value="{ 'user_name': ?0 }")
     // List<UserDO> findByUserName(String userName);
 
-    List<UserDO> findByName(String userName);
+    List<UserDO> findByusername(String userName);
 
 }
