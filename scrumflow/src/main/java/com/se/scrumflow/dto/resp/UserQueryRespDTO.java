@@ -14,7 +14,7 @@ public class UserQueryRespDTO {
 
     String userID;
 
-    String userName;
+    String username;
 
     String roleName;
     
