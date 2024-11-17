@@ -26,9 +26,9 @@ public class ItemCreateReqDTO {
 
     String description;
 
-    String createUser;
+    ObjectId createUser;
 
-    String assignee;
+    ObjectId assignee;
 
     Integer priority;
 

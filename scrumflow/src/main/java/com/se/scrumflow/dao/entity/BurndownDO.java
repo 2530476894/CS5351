@@ -1,30 +1,27 @@
 package com.se.scrumflow.dao.entity;
 
-import com.se.scrumflow.common.database.BaseDO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.util.Date;
+import java.util.Map;
 
-@Document(collection = "col_sprint")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class SprintDO extends BaseDO {
+@Document(collection = "col_burndown")
+public class BurndownDO {
     @MongoId
-    @Field("_id")
     private ObjectId id;
-    private String sprintName;
-    private Date startDate;
-    private Date endDate;
-    private Integer status;
-    private Integer totalStoryPoints;
-    private Integer completedStoryPoints;
+    private ObjectId sprintId;
+    private Date startTime;
+    private Date endTime;
+    private Map<Date,Integer> actualRemainingStoryPoints;
+    private Map<Date,Integer> plannedRemainingStoryPoints;
 }

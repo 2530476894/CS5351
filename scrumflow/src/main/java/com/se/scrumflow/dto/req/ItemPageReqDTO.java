@@ -14,9 +14,9 @@ public class ItemPageReqDTO {
 
     Integer status;
 
-    String createUser;
+    ObjectId createUser;
 
-    String assignee;
+    ObjectId assignee;
 
     Integer priority;
 
@@ -28,8 +28,8 @@ public class ItemPageReqDTO {
 
     Date endTime;
 
-    int pageNumber;
+    Integer pageNumber;
 
-    int pageSize;
+    Integer pageSize;
 
 }

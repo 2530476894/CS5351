@@ -6,16 +6,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class SprintCreateReqDTO {
-//    private String id;
-    private String sprintName;
-    private Date startDate;
-    private Date endDate;
-    private Integer status;
+public class ActualRemainingStoryPointDTO {
+    private Date date;
+    private int value;
 }
 
