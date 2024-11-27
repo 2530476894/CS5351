@@ -11,6 +11,8 @@ import com.se.scrumflow.dao.repository.SprintRepository;
 import com.se.scrumflow.dto.req.SprintCreateReqDTO;
 import com.se.scrumflow.dto.req.SprintUpdateReqDTO;
 import com.se.scrumflow.dto.req.SprintWithItemsDTO;
+import com.se.scrumflow.dto.resp.AllSprintDTO;
+import com.se.scrumflow.dto.resp.SprintQueryDTO;
 import com.se.scrumflow.service.SprintService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,7 @@ public class SprintServiceImpl implements SprintService {
     private SprintRepository sprintRepository;
     @Autowired
     private MongoTemplate mongoTemplate;
+
     @Override
     public Result<Void> create(SprintCreateReqDTO requestParam) {
         try {
@@ -42,9 +45,15 @@ public class SprintServiceImpl implements SprintService {
     }
 
     @Override
-    public Result<List<SprintDO>> getAllSprints() {
-            List<SprintDO> sprints = sprintRepository.findAll();
-            return Results.success(sprints);
+    public AllSprintDTO getAllSprints() {
+        List<SprintDO> sprintDOList = sprintRepository.findAll();
+        List<SprintQueryDTO> sprintQueryDTOList = sprintDOList.stream()
+                .map(sprintDO -> BeanUtil.copyProperties(sprintDO, SprintQueryDTO.class))
+                .toList();
+        AllSprintDTO sprints = AllSprintDTO.builder()
+                .sprints(sprintQueryDTOList)
+                .build();
+        return sprints;
     }
 
     @Override
@@ -82,7 +91,7 @@ public class SprintServiceImpl implements SprintService {
             Query queryItems = new Query(Criteria
                     .where("sprintId").is(requestParam.getSprintId()));
             int total = mongoTemplate.find(queryItems, ItemDO.class).stream().mapToInt(ItemDO::getStoryPoint).sum();
-            update.set("totalStoryPoints",total);
+            update.set("totalStoryPoints", total);
         }
         if (requestParam.getCompletedStoryPoints() >= 0) { // 假设允许更新为0
             Query queryItems = new Query(Criteria
@@ -103,14 +112,14 @@ public class SprintServiceImpl implements SprintService {
 
     @Override
     public Result<SprintWithItemsDTO> getSprintWithItems(ObjectId sprintId) {
-            // 查找 Sprint
-            Optional<SprintDO> sprintOptional = sprintRepository.findById(sprintId);
-            SprintDO sprint = sprintOptional.get();
-            // 使用 MongoTemplate 查询与当前 sprintId 相关的 Items
-            Query query = new Query(Criteria.where("sprintId").is(sprintId));
-            List<ItemDO> itemList = mongoTemplate.find(query, ItemDO.class);
-            // 创建 SprintWithItemsDTO
-            SprintWithItemsDTO dto = new SprintWithItemsDTO(sprint, itemList);
-            return Results.success(dto);
+        // 查找 Sprint
+        Optional<SprintDO> sprintOptional = sprintRepository.findById(sprintId);
+        SprintDO sprint = sprintOptional.get();
+        // 使用 MongoTemplate 查询与当前 sprintId 相关的 Items
+        Query query = new Query(Criteria.where("sprintId").is(sprintId));
+        List<ItemDO> itemList = mongoTemplate.find(query, ItemDO.class);
+        // 创建 SprintWithItemsDTO
+        SprintWithItemsDTO dto = new SprintWithItemsDTO(sprint, itemList);
+        return Results.success(dto);
     }
 }
