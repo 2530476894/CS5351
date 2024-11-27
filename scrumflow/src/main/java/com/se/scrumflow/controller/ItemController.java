@@ -30,7 +30,6 @@ public class ItemController {
     @PostMapping("/create")
     @Operation(summary = "创建单个事项", description = "创建事项")
     public Result<Void> createItem(@RequestBody ItemCreateReqDTO requestParam) {
-        StpUtil.checkPermission("item.create");
         itemService.createItem(requestParam);
         return Results.success();
     }
@@ -38,21 +37,18 @@ public class ItemController {
     @GetMapping("/{id}")
     @Operation(summary = "查询单个事项", description = "查询单个事项")
     public Result<ItemQueryRespDTO> queryItem(@PathVariable ObjectId id) {
-        StpUtil.checkPermission("item.query");  
         return Results.success(itemService.queryItem(id));
     }
 
     @GetMapping("/page")
     @Operation(summary = "分页查询事项", description = "分页查询事项")
     public Result<Page<ItemPageRespDTO>> pageItem(@RequestBody ItemPageReqDTO requestParam) {
-        StpUtil.checkPermission("item.page");  
         return Results.success(itemService.pageItem(requestParam));
     }
 
     @PatchMapping("/update")
     @Operation(summary = "更新单个事项", description = "更新单个事项")
     public Result<Void> updateItem(@RequestBody ItemUpdateReqDTO requestParam) {
-        StpUtil.checkPermission("item.update");  
         itemService.updateItem(requestParam);
         return Results.success();
     }
@@ -60,7 +56,6 @@ public class ItemController {
     @PatchMapping("/update/{status}")
     @Operation(summary = "更新单个事项状态", description = "更新单个事项状态")
     public Result<Void> updateItemStatus(@RequestParam("id") ObjectId id, @PathVariable Integer status) {
-        StpUtil.checkPermission("item.update");  
         itemService.updateItemStatus(id, status);
         return Results.success();
     }
@@ -68,7 +63,6 @@ public class ItemController {
     @DeleteMapping("/delete/{id}")
     @Operation(summary = "逻辑删除单个事项", description = "逻辑删除单个事项")
     public Result<Void> deleteItem(@PathVariable ObjectId id) {
-        StpUtil.checkPermission("item.delete");  
         itemService.logicDeleteItem(id);
         return Results.success();
     }
