@@ -1,25 +1,20 @@
 package com.se.scrumflow.dto.req;
-import com.se.scrumflow.dao.entity.ItemDO;
-import com.se.scrumflow.dao.entity.SprintDO;
+
+import com.se.scrumflow.dto.resp.ItemQueryRespDTO;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class SprintWithItemsDTO {
-    private SprintDO sprint;
-    private List<ItemDO> items;
 
-    public SprintWithItemsDTO(SprintDO sprint, List<ItemDO> items) {
-        this.sprint = sprint;
-        this.items = items;
-    }
+    private List<ItemQueryRespDTO> items;
 
-    // 生成getter方法
-    public SprintDO getSprint() {
-        return sprint;
-    }
-
-    public List<ItemDO> getItems() {
-        return items;
-    }
 }
 

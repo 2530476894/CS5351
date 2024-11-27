@@ -74,7 +74,7 @@ public class SprintController {
     @GetMapping("/items/{sprintId}")
     @Operation(summary = "返回sprint及其关联的items集合", description = "返回指定的Sprint及其关联的items集合")
     public Result<SprintWithItemsDTO> getSprintWithItems(@PathVariable("sprintId") ObjectId sprintId) {
-        return sprintService.getSprintWithItems(sprintId);
+        return Results.success(sprintService.getSprintWithItems(sprintId));
     }
 }
 

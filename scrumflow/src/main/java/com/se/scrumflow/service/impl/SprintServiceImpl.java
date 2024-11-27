@@ -12,6 +12,7 @@ import com.se.scrumflow.dto.req.SprintCreateReqDTO;
 import com.se.scrumflow.dto.req.SprintUpdateReqDTO;
 import com.se.scrumflow.dto.req.SprintWithItemsDTO;
 import com.se.scrumflow.dto.resp.AllSprintDTO;
+import com.se.scrumflow.dto.resp.ItemQueryRespDTO;
 import com.se.scrumflow.dto.resp.SprintQueryDTO;
 import com.se.scrumflow.service.SprintService;
 import org.bson.types.ObjectId;
@@ -111,15 +112,20 @@ public class SprintServiceImpl implements SprintService {
     }
 
     @Override
-    public Result<SprintWithItemsDTO> getSprintWithItems(ObjectId sprintId) {
+    public SprintWithItemsDTO getSprintWithItems(ObjectId sprintId) {
         // 查找 Sprint
         Optional<SprintDO> sprintOptional = sprintRepository.findById(sprintId);
         SprintDO sprint = sprintOptional.get();
         // 使用 MongoTemplate 查询与当前 sprintId 相关的 Items
         Query query = new Query(Criteria.where("sprintId").is(sprintId));
-        List<ItemDO> itemList = mongoTemplate.find(query, ItemDO.class);
+        List<ItemDO> itemDOList = mongoTemplate.find(query, ItemDO.class);
         // 创建 SprintWithItemsDTO
-        SprintWithItemsDTO dto = new SprintWithItemsDTO(sprint, itemList);
-        return Results.success(dto);
+        List<ItemQueryRespDTO> items = itemDOList.stream()
+                .map(itemDO -> BeanUtil.copyProperties(itemDO, ItemQueryRespDTO.class))
+                .toList();
+        SprintWithItemsDTO sprintWithItemsDTO = SprintWithItemsDTO.builder()
+                .items(items)
+                .build();
+        return sprintWithItemsDTO;
     }
 }

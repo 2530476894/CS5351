@@ -12,6 +12,6 @@ public interface SprintService {
     AllSprintDTO getAllSprints();
     Result<Void> delete(ObjectId sprintId);
     Result<Void> update(SprintUpdateReqDTO requestParam);
-    Result<SprintWithItemsDTO> getSprintWithItems(ObjectId sprintId);
+    SprintWithItemsDTO getSprintWithItems(ObjectId sprintId);
 }
 
