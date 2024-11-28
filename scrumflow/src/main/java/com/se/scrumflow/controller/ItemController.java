@@ -42,7 +42,7 @@ public class ItemController {
 
     @GetMapping("/page")
     @Operation(summary = "分页查询事项", description = "分页查询事项")
-    public Result<Page<ItemPageRespDTO>> pageItem(@RequestBody ItemPageReqDTO requestParam) {
+    public Result<Page<ItemPageRespDTO>> pageItem(@ModelAttribute ItemPageReqDTO requestParam) {
         return Results.success(itemService.pageItem(requestParam));
     }
 
