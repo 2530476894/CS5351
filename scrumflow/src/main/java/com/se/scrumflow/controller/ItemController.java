@@ -4,6 +4,7 @@ import com.se.scrumflow.common.convention.result.Result;
 import com.se.scrumflow.common.convention.result.Results;
 import com.se.scrumflow.dto.req.ItemCreateReqDTO;
 import com.se.scrumflow.dto.req.ItemPageReqDTO;
+import com.se.scrumflow.dto.req.ItemUpdateFieldReqDTO;
 import com.se.scrumflow.dto.req.ItemUpdateReqDTO;
 import com.se.scrumflow.dto.resp.ItemPageRespDTO;
 import com.se.scrumflow.dto.resp.ItemQueryRespDTO;
@@ -11,7 +12,6 @@ import com.se.scrumflow.service.ItemService;
 import com.se.scrumflow.utils.Page;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import cn.dev33.satoken.stp.StpUtil;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.web.bind.annotation.*;
@@ -46,17 +46,17 @@ public class ItemController {
         return Results.success(itemService.pageItem(requestParam));
     }
 
-    @PatchMapping("/update")
+    @PutMapping("/update")
     @Operation(summary = "更新单个事项", description = "更新单个事项")
     public Result<Void> updateItem(@RequestBody ItemUpdateReqDTO requestParam) {
         itemService.updateItem(requestParam);
         return Results.success();
     }
 
-    @PatchMapping("/update/{status}")
-    @Operation(summary = "更新单个事项状态", description = "更新单个事项状态")
-    public Result<Void> updateItemStatus(@RequestParam("id") ObjectId id, @PathVariable Integer status) {
-        itemService.updateItemStatus(id, status);
+    @PatchMapping("/update/{id}")
+    @Operation(summary = "一键更新某个事项的单个属性", description = "一键更新某个事项的单个属性")
+    public Result<Void> updateItemField(@PathVariable("id") ObjectId id, @RequestBody ItemUpdateFieldReqDTO fields) {
+        itemService.updateItemField(id, fields);
         return Results.success();
     }
 

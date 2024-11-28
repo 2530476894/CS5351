@@ -2,6 +2,7 @@ package com.se.scrumflow.service;
 
 import com.se.scrumflow.dto.req.ItemCreateReqDTO;
 import com.se.scrumflow.dto.req.ItemPageReqDTO;
+import com.se.scrumflow.dto.req.ItemUpdateFieldReqDTO;
 import com.se.scrumflow.dto.req.ItemUpdateReqDTO;
 import com.se.scrumflow.dto.resp.ItemPageRespDTO;
 import com.se.scrumflow.dto.resp.ItemQueryRespDTO;
@@ -18,7 +19,7 @@ public interface ItemService {
 
     void updateItem(ItemUpdateReqDTO requestParam);
 
-    void updateItemStatus(ObjectId id, Integer status);
+    void updateItemField(ObjectId id, ItemUpdateFieldReqDTO fields);
 
     void logicDeleteItem(ObjectId id);
 

@@ -5,6 +5,7 @@ import com.se.scrumflow.dao.entity.ItemDO;
 import com.se.scrumflow.dao.repository.ItemRepository;
 import com.se.scrumflow.dto.req.ItemCreateReqDTO;
 import com.se.scrumflow.dto.req.ItemPageReqDTO;
+import com.se.scrumflow.dto.req.ItemUpdateFieldReqDTO;
 import com.se.scrumflow.dto.req.ItemUpdateReqDTO;
 import com.se.scrumflow.dto.resp.ItemPageRespDTO;
 import com.se.scrumflow.dto.resp.ItemQueryRespDTO;
@@ -72,11 +73,10 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public void updateItemStatus(ObjectId id, Integer status) {
+    public void updateItemField(ObjectId id, ItemUpdateFieldReqDTO fields) {
         Query query = new Query(Criteria.where("id").is(id));
-        Update update = Update.update("status", status);
+        Update update = GeneralOperations.buildQueryOrUpdate(fields, Update.class);
         Time.setUpdateTime(update);
-        Time.setDoneTime(update, status);
         mongoTemplate.updateFirst(query, update, ItemDO.class);
     }
 
