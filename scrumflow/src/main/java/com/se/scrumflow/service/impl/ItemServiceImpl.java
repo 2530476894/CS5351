@@ -16,6 +16,7 @@ import com.se.scrumflow.utils.Time;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -90,5 +91,12 @@ public class ItemServiceImpl implements ItemService {
         Update update = Update.update("delFlag", 1);
         Time.setUpdateTime(update);
         mongoTemplate.updateFirst(query, update, ItemDO.class);
+    }
+
+    @Override
+    public List<ItemQueryRespDTO> getAllItem() {
+        List<ItemDO> itemDOList = itemRepository.findAll(Sort.by("createTime").reverse());
+        return itemDOList.stream().map(itemDO -> BeanUtil.copyProperties(itemDO, ItemQueryRespDTO.class))
+                .toList();
     }
 }

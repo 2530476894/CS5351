@@ -16,6 +16,8 @@ import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * 事项：用户故事、子需求等统称为事项
  */
@@ -26,6 +28,12 @@ import org.springframework.web.bind.annotation.*;
 public class ItemController {
 
     private final ItemService itemService;
+
+    @GetMapping("/all")
+    @Operation(summary = "查询所有事项", description = "查询所有事项")
+    public Result<List<ItemQueryRespDTO>> getAllItem() {
+        return Results.success(itemService.getAllItem());
+    }
 
     @PostMapping("/create")
     @Operation(summary = "创建单个事项", description = "创建事项")

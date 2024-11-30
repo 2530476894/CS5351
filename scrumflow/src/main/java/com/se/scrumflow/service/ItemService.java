@@ -9,6 +9,8 @@ import com.se.scrumflow.dto.resp.ItemQueryRespDTO;
 import com.se.scrumflow.utils.Page;
 import org.bson.types.ObjectId;
 
+import java.util.List;
+
 public interface ItemService {
 
     void createItem(ItemCreateReqDTO requestParam);
@@ -22,5 +24,7 @@ public interface ItemService {
     void updateItemField(ObjectId id, ItemUpdateFieldReqDTO fields);
 
     void logicDeleteItem(ObjectId id);
+
+    List<ItemQueryRespDTO> getAllItem();
 
 }
