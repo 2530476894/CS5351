@@ -19,7 +19,5 @@ public class SprintQueryDTO {
     private Date startDate;
     private Date endDate;
     private Integer status;
-    private Integer totalStoryPoints;
-    private Integer completedStoryPoints;
 
 }

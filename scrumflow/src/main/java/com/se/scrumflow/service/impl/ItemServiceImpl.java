@@ -76,6 +76,9 @@ public class ItemServiceImpl implements ItemService {
     public void updateItemField(ObjectId id, ItemUpdateFieldReqDTO fields) {
         Query query = new Query(Criteria.where("id").is(id));
         Update update = GeneralOperations.buildQueryOrUpdate(fields, Update.class);
+        if (fields.getStatus() != null) {
+            Time.setDoneTime(update, fields.getStatus());
+        }
         Time.setUpdateTime(update);
         mongoTemplate.updateFirst(query, update, ItemDO.class);
     }

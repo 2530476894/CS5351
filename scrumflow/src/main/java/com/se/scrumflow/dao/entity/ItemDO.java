@@ -1,5 +1,6 @@
 package com.se.scrumflow.dao.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.se.scrumflow.common.database.BaseDO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

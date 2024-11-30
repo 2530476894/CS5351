@@ -8,5 +8,5 @@ import java.util.Date;
 import java.util.List;
 
 public interface BurndownRepository extends MongoRepository<BurndownDO, ObjectId> {
-    BurndownDO findBySprintId(ObjectId sprintId);
+    BurndownDO findBySprintId(ObjectId id);
 }
