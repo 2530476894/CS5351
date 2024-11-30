@@ -50,4 +50,6 @@ public class ItemQueryRespDTO {
 
     Integer delFlag;
 
+    Integer process;
+
 }

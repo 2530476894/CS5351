@@ -40,6 +40,7 @@ public class ItemServiceImpl implements ItemService {
         ItemDO itemDO = BeanUtil.copyProperties(requestParam, ItemDO.class);
         itemDO.setStatus(UNDO.getCode());
         itemDO.setDelFlag(0);
+        itemDO.setProcess(0);
         itemRepository.insert(itemDO);
     }
 

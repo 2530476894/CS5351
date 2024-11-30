@@ -31,4 +31,6 @@ public class ItemUpdateFieldReqDTO {
 
     Date doneTime;
 
+    Integer process;
+
 }

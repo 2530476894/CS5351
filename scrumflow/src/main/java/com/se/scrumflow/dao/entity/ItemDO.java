@@ -58,4 +58,6 @@ public class ItemDO extends BaseDO {
 
     Date endTime;
 
+    Integer process;
+
 }
